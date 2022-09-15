@@ -3,6 +3,7 @@ package uz.banktraining.pdf;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +13,11 @@ public class PDFHelper {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
-        PdfReader reader = new PdfReader("C:/Temp/shablon.pdf"); // input PDF
+        PdfReader reader = new PdfReader("C:/upload/template.pdf"); // input PDF
         PdfStamper stamper = new PdfStamper(reader,
-                new FileOutputStream("C:/Temp/pdf_modified"+ID+".pdf")); // output PDF
+                new FileOutputStream("C:/upload/certificate_"+ID+".pdf")); // output PDF
         BaseFont bf = BaseFont.createFont(
-                BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED); // set font
+                BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED); // set font
 
         //loop on pages (1-based)
         for (int i=1; i<=reader.getNumberOfPages(); i++){
@@ -29,7 +30,7 @@ public class PDFHelper {
             over.beginText();
             over.setFontAndSize(bf, 36);    // set font and size
             over.setColorFill(ExtendedColor.BLUE);
-            over.setTextMatrix(290, 280);
+            over.setTextMatrix(350, 280);
 
             // set x,y position (0,0 is at the bottom left)
             over.newlineShowText(username+" "+ surname);

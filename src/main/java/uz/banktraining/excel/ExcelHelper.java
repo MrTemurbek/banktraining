@@ -58,58 +58,68 @@ public class ExcelHelper {
 
                     switch (cellIdx) {
                         case 0:
-                            if (currentCell.getStringCellValue() != null) {
+                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setName(currentCell.getStringCellValue());
                             } else {
-                                cellIdx = 7;
+                                copy= false;
                             }
                             break;
 
                         case 1:
-                            if (currentCell.getStringCellValue() != null) {
+                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setSurname(currentCell.getStringCellValue());
                             } else {
-                                cellIdx = 7;
+                                copy= false;
                             }
 
                             break;
 
                         case 2:
-                            if (currentCell.getStringCellValue() != null) {
+                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setCourse(currentCell.getStringCellValue());
                             } else {
-                                cellIdx = 7;
+                                copy= false;
                             }
                             break;
 
                         case 3:
-                            double number = currentCell.getNumericCellValue();
-                            String id = Double.toString(number);
-                            participants.setNumber(id);
-
+                            try{
+                                int number =(int) currentCell.getNumericCellValue();
+                                String id = Integer.toString(number);
+                                if(!id.isEmpty() && !id.isBlank()){
+                                    participants.setNumber(id);
+                                }
+                                else {
+                                    copy= false;
+                                }
+                            }
+                            catch (Exception e){
+                                String id = currentCell.getStringCellValue();
+                                    if(!id.isEmpty() && !id.isBlank()){
+                                        participants.setNumber(id);
+                                    }
+                                    else {
+                                        copy= false;
+                                    }
+                                }
                             break;
                         case 4:
-                            if (currentCell.getStringCellValue() != null) {
+                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
 
                                 participants.setCertificateID(currentCell.getStringCellValue());
 
                             } else {
-                                cellIdx = 7;
+                                copy= false;
                             }
                             break;
                         case 5:
-                            if (currentCell.getStringCellValue() != null) {
+                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setCertificateDate(currentCell.getStringCellValue());
                                 participants.setFileName(PATH + participants.getCertificateID());
                                 participants.setCreatedAt(new Date());
                             } else {
-                                cellIdx = 7;
+                                copy= false;
                             }
-                            break;
-                        case 7:
-                            copy= false;
-                            break;
-                        default:
                             break;
                     }
                     cellIdx++;

@@ -10,6 +10,7 @@ import uz.banktraining.pdf.PDFHelper;
 import uz.banktraining.repo.ParticipantsRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,13 +26,8 @@ public class ExcelService {
     public void save(MultipartFile file)  {
         try {
         List<Participants> participantsList = ExcelHelper.excelToTutorials(file.getInputStream());
-            for (Participants participant: participantsList) {
-                int participantIndex = participantsList.indexOf(participant);
-                if(repository.existsByCertificateID(participant.getCertificateID())){
-                    participantsList.remove(participantIndex);
-                }
-            }
-        repository.saveAll(participantsList);
+            participantsList.removeIf(participant -> repository.existsByCertificateID(participant.getCertificateID()));
+            repository.saveAll(participantsList);
     } catch (IOException e) {
         throw new RuntimeException("fail to store excel data: " + e.getMessage());
     }
