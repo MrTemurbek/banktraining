@@ -6,4 +6,5 @@ import uz.banktraining.entity.Participants;
 
 @Repository
 public interface ParticipantsRepository extends JpaRepository<Participants, Long> {
+    Boolean existsByCertificateID(String ID);
 }

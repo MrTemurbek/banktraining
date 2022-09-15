@@ -29,7 +29,7 @@ public class AuthController {
 
 
     @PostMapping("/upload")
-    public ResponseDTO uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseDTO uploadFile(@RequestParam MultipartFile file) {
         try {
             excelService.save(file);
             return new ResponseDTO(0, "SUCCESS", null, null);
