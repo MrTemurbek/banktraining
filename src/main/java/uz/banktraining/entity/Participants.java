@@ -26,7 +26,7 @@ public class Participants {
     @NotNull
     @Column(name = "phone_number")
     private String number;
-    @Column(name = "certificate_id")
+    @Column(name = "certificate_id", unique = true)
     @NotNull
     private String certificateID;
     @Column(name = "certificate_date")
