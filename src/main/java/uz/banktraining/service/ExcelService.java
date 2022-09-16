@@ -26,10 +26,16 @@ public class ExcelService {
     public void save(MultipartFile file)  {
         try {
         List<Participants> participantsList = ExcelHelper.excelToTutorials(file.getInputStream());
-            participantsList.removeIf(participant -> repository.existsByCertificateID(participant.getCertificateID()));
+            participantsList.removeIf(participant -> repository.existsByCertificateID(participant.getCertificateID())
+            );
+            for (Participants participants : participantsList) {
+                new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCertificateDate(), participants.getCourse());
+            }
             repository.saveAll(participantsList);
     } catch (IOException e) {
         throw new RuntimeException("fail to store excel data: " + e.getMessage());
-    }
+    } catch (DocumentException e) {
+            throw new RuntimeException("fail to create pdf file"+e.getMessage());
+        }
     }
 }

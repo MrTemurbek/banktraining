@@ -13,9 +13,9 @@ public class PDFHelper {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
-        PdfReader reader = new PdfReader("C:/upload/template.pdf"); // input PDF
+        PdfReader reader = new PdfReader("templates/template.pdf"); // input PDF
         PdfStamper stamper = new PdfStamper(reader,
-                new FileOutputStream("C:/upload/certificate_"+ID+".pdf")); // output PDF
+                new FileOutputStream("src/main/resources/pdf/certificate_"+ID+".pdf")); // output PDF
         BaseFont bf = BaseFont.createFont(
                 BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED); // set font
 

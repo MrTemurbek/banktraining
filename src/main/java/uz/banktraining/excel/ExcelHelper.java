@@ -125,7 +125,6 @@ public class ExcelHelper {
                     cellIdx++;
                 }
                 if (copy) {
-                    new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCertificateDate(), participants.getCourse());
                     participantsList.add(participants);
                 }
             }
@@ -135,8 +134,6 @@ public class ExcelHelper {
             return participantsList;
         } catch (IOException e) {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
-        } catch (DocumentException e) {
-            throw new RuntimeException("fail to create pdf file: " + e.getMessage());
         }
     }
 }
