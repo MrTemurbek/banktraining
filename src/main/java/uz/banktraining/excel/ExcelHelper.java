@@ -13,12 +13,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.entity.Participants;
 import uz.banktraining.pdf.PDFHelper;
 import uz.banktraining.repo.ParticipantsRepository;
 
-
+@Component
 public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String PATH = "./src/main/resources/upload/certificate_";

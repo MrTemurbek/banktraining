@@ -1,15 +1,14 @@
 package uz.banktraining.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
 import uz.banktraining.service.ParticipantService;
 
-import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class ParticipantController {
     private final ParticipantService service;
 
@@ -22,10 +21,15 @@ public class ParticipantController {
         return new ResponseDTO(0, "SUCCESS", null, service.getAll());
     }
 
-    @GetMapping("save")
+    @GetMapping("/save")
     public ResponseDTO save(@RequestBody Participants participants){
         service.save(participants);
         return new ResponseDTO(0, "SUCCESS", null, null);
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<?> downloadFile(@PathVariable("id") String id) {
+        return service.downloadFile(id);
     }
 
 
