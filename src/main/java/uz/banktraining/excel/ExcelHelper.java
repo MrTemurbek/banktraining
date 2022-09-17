@@ -23,6 +23,7 @@ import uz.banktraining.repo.ParticipantsRepository;
 public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String PATH = "./src/main/resources/upload/certificate_";
+    private static final String LINK = "banktraining.uz/api/download/";
 
     public boolean hasExcelFormat(MultipartFile file) {
         return TYPE.equals(file.getContentType());
@@ -116,7 +117,8 @@ public class ExcelHelper {
                         case 5:
                             if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setCertificateDate(currentCell.getStringCellValue());
-                                participants.setFileName(PATH + participants.getCertificateID());
+                                participants.setFileName(PATH + participants.getCertificateID()+".pdf");
+                                participants.setLink(LINK+participants.getCertificateID());
                                 participants.setCreatedAt(new Date());
                             } else {
                                 copy= false;
