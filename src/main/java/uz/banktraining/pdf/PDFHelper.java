@@ -4,12 +4,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.*;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PDFHelper {
-    public void pdfCreator(String username, String surname, String ID, String courseDate, String course) throws IOException, DocumentException {
+    public void pdfCreator(String username, String surname, String ID, String courseDate, String course, String link) throws IOException, DocumentException {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
@@ -36,6 +38,15 @@ public class PDFHelper {
             over.newlineShowText(username+" "+ surname);
             over.endText();
 
+            //Step-4: Create New paragraph for QR Summary
+            //Step-5: Create QR Code by using BarcodeQRCode Class
+            BarcodeQRCode my_code = new BarcodeQRCode(link, 150, 150, null);
+            //Step-6: Get Image corresponding to the input string
+            Image image = my_code.getImage();
+            image.setAbsolutePosition(650f, 40f);
+            over.addImage(image);
+            //Step-7: Stamp the QR image into the PDF document
+            //Step-8: Close the PDF document
         }
 
         stamper.close();

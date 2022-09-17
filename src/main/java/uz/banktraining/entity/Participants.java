@@ -32,8 +32,8 @@ public class Participants {
     @Column(name = "certificate_date")
     @NotNull
     private String certificateDate;
-    @Column(name = "file_name")
-    private String fileName;
+    @Column(name = "path")
+    private String path;
     @Column(name = "created_at")
     private Date createdAt;
     private String link;

@@ -1,7 +1,6 @@
 package uz.banktraining.service;
 
 import com.itextpdf.text.DocumentException;
-import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.entity.Participants;
@@ -10,8 +9,6 @@ import uz.banktraining.pdf.PDFHelper;
 import uz.banktraining.repo.ParticipantsRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -21,6 +18,7 @@ public class ExcelService {
 
     public ExcelService(ParticipantsRepository repository) {
         this.repository = repository;
+
     }
 
     public void save(MultipartFile file)  {
@@ -29,7 +27,7 @@ public class ExcelService {
             participantsList.removeIf(participant -> repository.existsByCertificateID(participant.getCertificateID())
             );
             for (Participants participants : participantsList) {
-                new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCertificateDate(), participants.getCourse());
+                new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCertificateDate(), participants.getCourse(), participants.getLink());
             }
             repository.saveAll(participantsList);
     } catch (IOException e) {
