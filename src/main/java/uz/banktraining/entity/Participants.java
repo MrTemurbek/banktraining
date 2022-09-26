@@ -38,7 +38,4 @@ public class Participants {
     private Date createdAt;
     private String link;
 
-
-
-
 }

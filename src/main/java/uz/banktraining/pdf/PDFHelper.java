@@ -34,19 +34,12 @@ public class PDFHelper {
             over.setColorFill(ExtendedColor.BLUE);
             over.setTextMatrix(350, 280);
 
-            // set x,y position (0,0 is at the bottom left)
-            over.newlineShowText(username+" "+ surname);
+            over.newlineShowText(username+"  "+ surname);
             over.endText();
-
-            //Step-4: Create New paragraph for QR Summary
-            //Step-5: Create QR Code by using BarcodeQRCode Class
             BarcodeQRCode my_code = new BarcodeQRCode(link, 150, 150, null);
-            //Step-6: Get Image corresponding to the input string
             Image image = my_code.getImage();
-            image.setAbsolutePosition(650f, 40f);
+            image.setAbsolutePosition(600f, 40f);
             over.addImage(image);
-            //Step-7: Stamp the QR image into the PDF document
-            //Step-8: Close the PDF document
         }
 
         stamper.close();

@@ -1,6 +1,7 @@
 package uz.banktraining.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
@@ -32,5 +33,21 @@ public class ParticipantController {
         return service.downloadFile(id);
     }
 
+    @GetMapping("/getById/{id}")
+    public Participants getByCertificateId(@PathVariable("id") String id){
+        return service.getByID(id);
+    }
+
+
+    @Transactional
+    @PutMapping("/update/{certificateId}")
+public ResponseDTO update(@PathVariable String certificateId, @RequestBody Participants participant){
+        return service.update(certificateId, participant);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseDTO delete(@PathVariable("id") String id){
+        return service.delete(id);
+    }
 
 }

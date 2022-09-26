@@ -1,11 +1,13 @@
 package uz.banktraining.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.dto.AdminDTO;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.service.AdminService;
 import uz.banktraining.service.ExcelService;
+import uz.banktraining.service.ParticipantService;
 
 
 @RestController
@@ -13,13 +15,13 @@ import uz.banktraining.service.ExcelService;
 public class AuthController {
     private final AdminService adminService;
     private final ExcelService excelService;
+    private final ParticipantService service;
 
 
-    public AuthController(AdminService adminService, ExcelService excelService) {
-
+    public AuthController(AdminService adminService, ExcelService excelService, ParticipantService service) {
         this.adminService = adminService;
         this.excelService = excelService;
-
+        this.service = service;
     }
 
     @PostMapping("/check")
@@ -36,5 +38,11 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
+    }
+
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<?> downloadFile(@PathVariable("id") String id) {
+        return service.downloadFile(id);
     }
 }
