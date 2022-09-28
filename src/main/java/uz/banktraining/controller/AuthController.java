@@ -14,13 +14,11 @@ import uz.banktraining.service.ParticipantService;
 @RequestMapping("/auth")
 public class AuthController {
     private final AdminService adminService;
-    private final ExcelService excelService;
     private final ParticipantService service;
 
 
-    public AuthController(AdminService adminService, ExcelService excelService, ParticipantService service) {
+    public AuthController(AdminService adminService, ParticipantService service) {
         this.adminService = adminService;
-        this.excelService = excelService;
         this.service = service;
     }
 
@@ -28,18 +26,6 @@ public class AuthController {
     public ResponseDTO checkAdmin(@RequestBody AdminDTO admin) {
         return adminService.check(admin);
     }
-
-
-    @PostMapping("/upload")
-    public ResponseDTO uploadFile(@RequestParam MultipartFile file) {
-        try {
-            excelService.save(file);
-            return new ResponseDTO(0, "SUCCESS", null, null);
-        } catch (Exception e) {
-            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
-        }
-    }
-
 
     @GetMapping("/download/{id}")
     public ResponseEntity<?> downloadFile(@PathVariable("id") String id) {

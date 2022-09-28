@@ -3,8 +3,10 @@ package uz.banktraining.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
+import uz.banktraining.service.ExcelService;
 import uz.banktraining.service.ParticipantService;
 
 
@@ -12,9 +14,12 @@ import uz.banktraining.service.ParticipantService;
 @RequestMapping("/api")
 public class ParticipantController {
     private final ParticipantService service;
+    private final ExcelService excelService;
 
-    public ParticipantController(ParticipantService service) {
+
+    public ParticipantController(ParticipantService service, ExcelService excelService) {
         this.service = service;
+        this.excelService = excelService;
     }
 
     @GetMapping("/getAll")
@@ -50,4 +55,13 @@ public ResponseDTO update(@PathVariable String certificateId, @RequestBody Parti
         return service.delete(id);
     }
 
+    @PostMapping("/upload")
+    public ResponseDTO uploadFile(@RequestParam MultipartFile file) {
+        try {
+            excelService.save(file);
+            return new ResponseDTO(0, "SUCCESS", null, null);
+        } catch (Exception e) {
+            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
+        }
+    }
 }
