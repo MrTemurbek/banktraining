@@ -29,7 +29,7 @@ public class AdminService {
             return new ResponseDTO(1, "ERROR", "Login or Password is not incorrect", null);
         }
         String token = jwtUtil.generateToken(admin.getUsername());
-        return new  ResponseDTO(0, "SUCCESS", null, "Bearer "+token);
+        return new  ResponseDTO(0, "SUCCESS", null, token);
     }
 
 }
