@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import uz.banktraining.dto.ParticipantDTO;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
 import uz.banktraining.service.ExcelService;
@@ -27,8 +28,8 @@ public class ParticipantController {
         return new ResponseDTO(0, "SUCCESS", null, service.getAll());
     }
 
-    @GetMapping("/save")
-    public ResponseDTO save(@RequestBody Participants participants){
+    @PostMapping("/save")
+    public ResponseDTO save(@RequestBody ParticipantDTO participants){
         service.save(participants);
         return new ResponseDTO(0, "SUCCESS", null, null);
     }

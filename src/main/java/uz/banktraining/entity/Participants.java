@@ -2,6 +2,7 @@ package uz.banktraining.entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import uz.banktraining.dto.ParticipantDTO;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -38,4 +39,12 @@ public class Participants {
     private Date createdAt;
     private String link;
 
+    public Participants (ParticipantDTO participantDTO) {
+        this.name = participantDTO.getName();
+        this.surname = participantDTO.getSurname();
+        this.course =participantDTO.getCourse();
+        this.number =participantDTO.getNumber();
+        this.certificateID =participantDTO.getCertificateID();
+        this.certificateDate = participantDTO.getCertificateDate();
+    }
 }
