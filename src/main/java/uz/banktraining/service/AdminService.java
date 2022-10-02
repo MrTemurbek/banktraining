@@ -31,7 +31,7 @@ public class AdminService {
         try {
             authenticationManager.authenticate(authInputToken);
         }catch (BadCredentialsException e){
-            return new ResponseDTO(1, "ERROR", "Login or Password is not incorrect", null);
+            return new ResponseDTO(1, "ERROR", "Login or Password is not correct", null);
         }
         String token = jwtUtil.generateToken(admin.getUsername());
         return new  ResponseDTO(0, "SUCCESS", null, token);
