@@ -11,7 +11,6 @@ import uz.banktraining.service.ParticipantService;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
     private final AdminService adminService;
