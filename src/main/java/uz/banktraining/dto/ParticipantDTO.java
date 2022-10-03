@@ -14,5 +14,4 @@ public class ParticipantDTO {
     private String course;
     private String number;
     private String certificateID;
-    private String certificateDate;
 }
