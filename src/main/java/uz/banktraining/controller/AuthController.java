@@ -11,6 +11,7 @@ import uz.banktraining.service.ParticipantService;
 
 
 @RestController
+@CrossOrigin("https://banktraining.netlify.app/")
 @RequestMapping("/auth")
 public class AuthController {
     private final AdminService adminService;
