@@ -24,6 +24,7 @@ public class AuthController {
 
     @PostMapping("/check")
     public ResponseDTO checkAdmin(@RequestBody AdminDTO admin) {
+        System.out.println("Login:"+admin.getUsername() +"\n Password:"+admin.getPassword());
         return adminService.check(admin);
     }
 
