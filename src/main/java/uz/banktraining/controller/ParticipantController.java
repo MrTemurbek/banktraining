@@ -12,6 +12,7 @@ import uz.banktraining.service.ParticipantService;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class ParticipantController {
     private final ParticipantService service;
