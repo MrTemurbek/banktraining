@@ -13,9 +13,12 @@ public class PDFHelper {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
-        PdfReader reader = new PdfReader("templates/template.pdf"); // input PDF
+//        PdfReader reader = new PdfReader("templates/template.pdf"); // input PDF
+
+        PdfReader reader = new PdfReader("template.pdf"); // input PDF
         PdfStamper stamper = new PdfStamper(reader,
-                new FileOutputStream("src/main/resources/pdf/certificate_"+ID+".pdf")); // output PDF
+//                new FileOutputStream("src/main/resources/pdf/certificate_"+ID+".pdf")); // output PDF
+                new FileOutputStream("certificate_"+ID+".pdf")); // output PDF
         BaseFont bfForAll = BaseFont.createFont(
                 BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 

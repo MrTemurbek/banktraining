@@ -24,8 +24,8 @@ import java.util.Objects;
 public class ParticipantService {
 
     private final ParticipantsRepository repository;
-    private final String PATH="./src/main/resources/pdf/";
-    private static final String PATH_TO_SAVE = "./src/main/resources/pdf/certificate_";
+//    private final String PATH="./src/main/resources/pdf/";
+//    private static final String PATH_TO_SAVE = "./src/main/resources/pdf/certificate_";
     private static final String LINK = "banktraining.uz/api/download/";
 
     public ParticipantService(ParticipantsRepository repository) {
@@ -39,7 +39,8 @@ public class ParticipantService {
     public ResponseDTO save(ParticipantDTO dto) {
         try{
             Participants participants = new Participants(dto);
-            participants.setPath(PATH_TO_SAVE + participants.getCertificateID());
+//            participants.setPath(PATH_TO_SAVE + participants.getCertificateID());
+            participants.setPath(participants.getCertificateID());
             participants.setLink("http://"+LINK+participants.getCertificateID());
             participants.setCreatedAt(new Date());
             repository.save(participants);
@@ -87,7 +88,8 @@ public class ParticipantService {
     }
 
     public ResponseEntity<?> downloadFile(String id) {
-        Path path = Paths.get(PATH+ "certificate_" + id+".pdf");
+//        Path path = Paths.get(PATH+ "certificate_" + id+".pdf");
+        Path path = Paths.get("certificate_" + id+".pdf");
         Resource resource = null;
         try {
             resource = new UrlResource(path.toUri());
