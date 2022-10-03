@@ -24,7 +24,7 @@ import java.util.Objects;
 public class ParticipantService {
 
     private final ParticipantsRepository repository;
-    private final String PATH="src/main/resources/pdf/";
+    private final String PATH="src/main/resources/templates/";
 //    private static final String PATH_TO_SAVE = "./src/main/resources/pdf/certificate_";
     private static final String PATH_TO_SAVE = "src/main/resources/templates/certificate_";
 //    private static final String LINK = "banktraining.uz/api/download/";
