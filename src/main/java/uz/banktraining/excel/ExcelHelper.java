@@ -109,14 +109,6 @@ public class ExcelHelper {
                             if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
 
                                 participants.setCertificateID(currentCell.getStringCellValue());
-
-                            } else {
-                                copy= false;
-                            }
-                            break;
-                        case 5:
-                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
-                                participants.setCertificateDate(currentCell.getStringCellValue());
                                 participants.setPath(PATH + participants.getCertificateID());
                                 participants.setLink("http://"+LINK+participants.getCertificateID());
                                 participants.setCreatedAt(new Date());
@@ -124,6 +116,7 @@ public class ExcelHelper {
                                 copy= false;
                             }
                             break;
+
                     }
                     cellIdx++;
                 }

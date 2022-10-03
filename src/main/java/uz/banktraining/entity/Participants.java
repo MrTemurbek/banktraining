@@ -23,6 +23,7 @@ public class Participants {
     @NotNull
     private String surname;
     @NotNull
+    @Column(length = 1000)
     private String course;
     @NotNull
     @Column(name = "phone_number")
@@ -30,9 +31,6 @@ public class Participants {
     @Column(name = "certificate_id", unique = true)
     @NotNull
     private String certificateID;
-    @Column(name = "certificate_date")
-    @NotNull
-    private String certificateDate;
     @Column(name = "path")
     private String path;
     @Column(name = "created_at")
@@ -45,6 +43,5 @@ public class Participants {
         this.course =participantDTO.getCourse();
         this.number =participantDTO.getNumber();
         this.certificateID =participantDTO.getCertificateID();
-        this.certificateDate = participantDTO.getCertificateDate();
     }
 }

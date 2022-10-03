@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PDFHelper {
-    public void pdfCreator(String username, String surname, String ID, String courseDate, String course, String link) throws IOException, DocumentException {
+    public void pdfCreator(String username, String surname, String ID, String course, String link) throws IOException, DocumentException {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
@@ -49,27 +49,26 @@ public class PDFHelper {
             over.newlineShowText(username+"  "+ surname);
             over.endText();
 
-            //Date
-            ColumnText ct1 = new ColumnText(over);
+//            //Date
+//            ColumnText ct1 = new ColumnText(over);
             BaseColor color = new BaseColor(36,79,124);
             Font paragraphFont=new Font(bfForAll,18,-1,color);
-            ct1.setSimpleColumn(150, 275, 825, 40);
-            Paragraph paragraph2 = new Paragraph(courseDate,paragraphFont);
-            paragraph2.setAlignment(Element.ALIGN_CENTER);
-            ct1.addElement(paragraph2);
-            ct1.go();
+//            ct1.setSimpleColumn(150, 275, 825, 40);
+//            Paragraph paragraph2 = new Paragraph(courseDate,paragraphFont);
+//            paragraph2.setAlignment(Element.ALIGN_CENTER);
+//            ct1.addElement(paragraph2);
+//            ct1.go();
 
             //Course-Name
-            String end = "mavzusidagi o’quv kursini tugatdi.";
             ColumnText ct = new ColumnText(over);
 
-            ct.setSimpleColumn(150, 250, 825, 40);
+            ct.setSimpleColumn(150, 280, 775, 10);
             Paragraph paragraph = new Paragraph(course,paragraphFont);
             paragraph.setAlignment(Element.ALIGN_CENTER);
-            Paragraph endParagraph = new Paragraph(end,paragraphFont);
-            endParagraph.setAlignment(Element.ALIGN_CENTER);
+//            Paragraph endParagraph = new Paragraph(end,paragraphFont);
+//            endParagraph.setAlignment(Element.ALIGN_CENTER);
             ct.addElement(paragraph);
-            ct.addElement(endParagraph);
+//            ct.addElement(endParagraph);
             ct.go();
 
             //QR-code

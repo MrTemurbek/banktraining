@@ -46,7 +46,7 @@ public class ParticipantService {
             participants.setLink("https://"+LINK+participants.getCertificateID());
             participants.setCreatedAt(new Date());
             repository.save(participants);
-            new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCertificateDate(), participants.getCourse(), participants.getLink());
+            new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCourse(), participants.getLink());
             return new ResponseDTO(0, "SUCCESS", null, null);
         }
         catch (Exception e){
@@ -68,9 +68,9 @@ public class ParticipantService {
             Participants participantDto = repository.getParticipantsByCertificateID(certificateId);
             String link = participantDto.getLink();
             participantDto = mapper.convertValue(participant, Participants.class);
-            repository.updateParticipants(participant.getName(), participant.getSurname(), participant.getNumber(), participant.getCertificateDate(), participant.getCourse(), participant.getCertificateID());
+            repository.updateParticipants(participant.getName(), participant.getSurname(), participant.getNumber(),  participant.getCourse(), participant.getCertificateID());
 
-            new PDFHelper().pdfCreator(participantDto.getName(), participantDto.getSurname(), participantDto.getCertificateID(), participantDto.getCertificateDate(), participantDto.getCourse(), link);
+            new PDFHelper().pdfCreator(participantDto.getName(), participantDto.getSurname(), participantDto.getCertificateID(), participantDto.getCourse(), link);
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
