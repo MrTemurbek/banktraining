@@ -25,8 +25,10 @@ public class ParticipantService {
 
     private final ParticipantsRepository repository;
     private final String PATH="./src/main/resources/pdf/";
-    private static final String PATH_TO_SAVE = "./src/main/resources/pdf/certificate_";
-    private static final String LINK = "banktraining.uz/api/download/";
+//    private static final String PATH_TO_SAVE = "./src/main/resources/pdf/certificate_";
+    private static final String PATH_TO_SAVE = "./src/main/resources/templates/certificate_";
+//    private static final String LINK = "banktraining.uz/api/download/";
+    private static final String LINK = "bank-training-uz.herokuapp.com/api/download/";
 
     public ParticipantService(ParticipantsRepository repository) {
         this.repository = repository;
@@ -41,7 +43,7 @@ public class ParticipantService {
             Participants participants = new Participants(dto);
             participants.setPath(PATH_TO_SAVE + participants.getCertificateID());
             participants.setPath(participants.getCertificateID());
-            participants.setLink("http://"+LINK+participants.getCertificateID());
+            participants.setLink("https://"+LINK+participants.getCertificateID());
             participants.setCreatedAt(new Date());
             repository.save(participants);
             new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCertificateDate(), participants.getCourse(), participants.getLink());
