@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="00000000000001" author="admin">
+        <createTable tableName="admins">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1050">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar"/>
+
+
+        </createTable>
+        <loadData
+                file="admin.csv"
+                separator=","
+                tableName='admins'>
+            <column name='id' type="numeric"/>
+            <column name='username' type="varchar"/>
+            <column name='password' type="varchar"/>
+        </loadData>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

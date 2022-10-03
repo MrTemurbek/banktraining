@@ -20,11 +20,6 @@ public class AdminService {
     }
 
     public ResponseDTO check(AdminDTO admin ){
-        if(admin.getUsername().equals("admin123") && admin.getPassword().equals("123")){
-            String token = jwtUtil.generateToken(admin.getUsername());
-            return new  ResponseDTO(0, "SUCCESS", null, token);
-        }
-
         UsernamePasswordAuthenticationToken authInputToken =
                 new UsernamePasswordAuthenticationToken(admin.getUsername(),
                         admin.getPassword());
