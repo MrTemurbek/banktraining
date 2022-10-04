@@ -3,6 +3,8 @@ package uz.banktraining.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +36,15 @@ public class ParticipantService {
         this.repository = repository;
     }
 
-    public List<Participants> getAll(){
-        return repository.findAll();
+    public Page<Participants> getAll(int pageNumber){
+        return repository.findAll(PageRequest.of(pageNumber-1, 15));
     }
 
     public ResponseDTO save(ParticipantDTO dto) {
+        if(repository.existsByCertificateID(dto.getCertificateID())){
+            return new ResponseDTO(1, "ERROR", "This Id is taken, please delete this "
+                    +dto.getCertificateID() + " id number" , null);
+        }
         try{
             Participants participants = new Participants(dto);
             participants.setPath(PATH_TO_SAVE + participants.getCertificateID());
@@ -103,5 +109,16 @@ public class ParticipantService {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    public ResponseDTO deleteAll() {
+        try{
+            repository.deleteAll();
+            return new ResponseDTO(0, "SUCCESS", null, null);
+        }
+        catch (Exception e) {
+            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
+        }
+
     }
 }

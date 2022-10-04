@@ -23,7 +23,7 @@ import uz.banktraining.repo.ParticipantsRepository;
 public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String PATH = "./src/main/resources/pdf/certificate_";
-    private static final String LINK = "banktraining.uz/api/download/";
+    private static final String LINK = "banktraining.uz/auth/download/";
 
     public boolean hasExcelFormat(MultipartFile file) {
         return TYPE.equals(file.getContentType());

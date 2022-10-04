@@ -1,5 +1,6 @@
 package uz.banktraining.controller;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class ParticipantController {
         this.excelService = excelService;
     }
 
-    @GetMapping("/getAll")
-    public ResponseDTO getAll(){
-        return new ResponseDTO(0, "SUCCESS", null, service.getAll());
+    @GetMapping("/getAll/{page}")
+    public ResponseDTO getAll(@PathVariable("page") @DefaultValue(value = "1") Integer page){
+        return new ResponseDTO(0, "SUCCESS", null, service.getAll(page));
     }
 
     @PostMapping("/save")
@@ -64,5 +65,15 @@ public ResponseDTO update(@PathVariable String certificateId, @RequestBody Parti
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
+    }
+    @DeleteMapping("deleteAll")
+    public ResponseDTO deleteAll() {
+        try {
+             service.deleteAll();
+            return new ResponseDTO(0, "SUCCESS", null, null);
+        } catch (Exception e) {
+            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
+        }
+
     }
 }
