@@ -22,7 +22,7 @@ import uz.banktraining.repo.ParticipantsRepository;
 @Component
 public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    private static final String PATH = "./src/main/resources/pdf/certificate_";
+    private static final String PATH = "./src/main/resources/templates/certificate_";
     private static final String LINK = "banktraining.uz/auth/download/";
 
     public boolean hasExcelFormat(MultipartFile file) {

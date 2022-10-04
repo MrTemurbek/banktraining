@@ -9,16 +9,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.banktraining.dto.ParticipantDTO;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
 import uz.banktraining.pdf.PDFHelper;
 import uz.banktraining.repo.ParticipantsRepository;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,10 +28,8 @@ public class ParticipantService {
 
     private final ParticipantsRepository repository;
     private final String PATH="src/main/resources/templates/";
-//    private static final String PATH_TO_SAVE = "./src/main/resources/pdf/certificate_";
     private static final String PATH_TO_SAVE = "src/main/resources/templates/certificate_";
-//    private static final String LINK = "banktraining.uz/api/download/";
-    private static final String LINK = "bank-training-uz.herokuapp.com/api/download/";
+    private static final String LINK = "banktraining.uz/auth/download/";
 
     public ParticipantService(ParticipantsRepository repository) {
         this.repository = repository;
@@ -49,7 +48,7 @@ public class ParticipantService {
             Participants participants = new Participants(dto);
             participants.setPath(PATH_TO_SAVE + participants.getCertificateID());
             participants.setPath(participants.getCertificateID());
-            participants.setLink("https://"+LINK+participants.getCertificateID());
+            participants.setLink("http://"+LINK+participants.getCertificateID());
             participants.setCreatedAt(new Date());
             repository.save(participants);
             new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCourse(), participants.getLink());
@@ -85,8 +84,9 @@ public class ParticipantService {
 
     public ResponseDTO delete(String id) {
         try{
-            Participants participants = repository.getParticipantsByCertificateID(id);
-            repository.deleteById(participants.getId());
+            Participants participant = repository.getParticipantsByCertificateID(id);
+            deleteFiles(participant.getPath());
+            repository.deleteById(participant.getId());
             return new ResponseDTO(0, "SUCCESS", null, null);
         }
         catch (Exception e) {
@@ -113,12 +113,29 @@ public class ParticipantService {
 
     public ResponseDTO deleteAll() {
         try{
+            List<Participants> participantsList = repository.findAll();
+            for (Participants participants : participantsList) {
+                deleteFiles(participants.getPath());
+            }
+
             repository.deleteAll();
             return new ResponseDTO(0, "SUCCESS", null, null);
         }
         catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
+    }
+    public void deleteFiles(String filePath){
+        Path path = Paths.get(filePath+".pdf");
 
+        try {
+            Files.delete(path);
+        } catch (NoSuchFileException ex) {
+            System.out.printf("No such file: %s\n", path);
+        } catch (DirectoryNotEmptyException ex) {
+            System.out.printf("Directory %s is not empty\n", path);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
