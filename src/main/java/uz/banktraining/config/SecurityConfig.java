@@ -43,8 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/**")
                 .hasRole("ADMIN")
-                .anyRequest()
-                .authenticated()
                 .and()
                 .httpBasic()
                 .disable()
@@ -61,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
+        System.out.println();
         return new BCryptPasswordEncoder();
     }
 
