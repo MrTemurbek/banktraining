@@ -14,6 +14,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 
@@ -52,12 +54,21 @@ public class JWTFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 } catch (Exception exc) {
-                    httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                            "Invalid JWT Token");
+                    HttpServletResponse httpResponse = (HttpServletResponse) httpServletResponse;
+                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    httpResponse.getOutputStream().println("Token has expired");
+                    httpResponse.getOutputStream().flush();
+                    httpResponse.getOutputStream().close();
+
                 }
             }
         }
 
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        try{
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        }
+        catch (Exception e){
+            System.err.println("Access is denied, jwtFilter");
+        }
     }
 }

@@ -35,8 +35,12 @@ public class ParticipantService {
         this.repository = repository;
     }
 
-    public Page<Participants> getAll(int pageNumber){
+    public Page<Participants> getAllByPage(int pageNumber){
         return repository.findAll(PageRequest.of(pageNumber-1, 15));
+    }
+
+    public List<Participants> getAll(){
+        return repository.findAll();
     }
 
     public ResponseDTO save(ParticipantDTO dto) {

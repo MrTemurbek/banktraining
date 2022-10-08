@@ -25,8 +25,8 @@ public class ParticipantController {
     }
 
     @GetMapping("/getAll/{page}")
-    public ResponseDTO getAll(@PathVariable("page") @DefaultValue(value = "1") Integer page){
-        return new ResponseDTO(0, "SUCCESS", null, service.getAll(page));
+    public ResponseDTO getAllByPage(@PathVariable(name ="page", required=false) @DefaultValue(value = "1") Integer page){
+        return new ResponseDTO(0, "SUCCESS", null, service.getAllByPage(page));
     }
 
     @PostMapping("/save")
@@ -66,7 +66,7 @@ public ResponseDTO update(@PathVariable String certificateId, @RequestBody Parti
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
     }
-    @DeleteMapping("deleteAll")
+    @DeleteMapping("/deleteAll")
     public ResponseDTO deleteAll() {
         try {
              service.deleteAll();
@@ -74,6 +74,11 @@ public ResponseDTO update(@PathVariable String certificateId, @RequestBody Parti
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
-
     }
+
+    @GetMapping("/getAll")
+    public ResponseDTO getAll(){
+        return new ResponseDTO(0, "SUCCESS", null, service.getAll());
+    }
+
 }
