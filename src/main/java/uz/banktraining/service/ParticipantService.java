@@ -157,6 +157,17 @@ public class ParticipantService {
             System.out.println(e.getMessage());
         }
     }
+
+    public ResponseDTO sendSMS(String id) {
+        try {
+            Participants participant = repository.getParticipantsByCertificateID(id);
+            System.out.println("SMS -> LINK:" + participant.getLink());
+        }
+        catch (Exception e){
+            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
+        }
+        return new ResponseDTO(0, "SUCCESS", null, null);
+    }
 }
 
 

@@ -65,8 +65,14 @@ public ResponseDTO update(@PathVariable String certificateId, @RequestBody Parti
     @DeleteMapping("/delete/{id}")
     public ResponseDTO delete(@PathVariable("id") Object id){
          return service.delete(String.valueOf(id));
-
     }
+
+    @CrossOrigin
+    @PostMapping("/sms/{certificateId}")
+    public ResponseDTO sendSMS(@PathVariable("certificateId") Object certificateId){
+        return service.sendSMS(String.valueOf(certificateId));
+    }
+
 
     @CrossOrigin
     @PostMapping("/upload")
