@@ -12,6 +12,6 @@ public interface ParticipantsRepository extends JpaRepository<Participants, Long
     Participants getParticipantsByCertificateID(String id);
 
     @Modifying
-    @Query("UPDATE Participants p set p.name= :name, p.surname = :surname,p.number = :number, p.course = :course where p.certificateID= :certificateId")
+    @Query("update Participants p set p.name= :name, p.surname = :surname,p.number = :number, p.course = :course where p.certificateID= :certificateId")
     void updateParticipants(String name, String surname, String number, String course, String certificateId);
 }

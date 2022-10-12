@@ -55,11 +55,11 @@ public class JWTFilter extends OncePerRequestFilter {
                     }
                 } catch (Exception exc) {
                     HttpServletResponse httpResponse = (HttpServletResponse) httpServletResponse;
+                    System.out.println("URL: "+httpServletRequest.getRequestURI());
                     httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     httpResponse.getOutputStream().println("Token has expired");
                     httpResponse.getOutputStream().flush();
                     httpResponse.getOutputStream().close();
-
                 }
             }
         }
@@ -68,6 +68,12 @@ public class JWTFilter extends OncePerRequestFilter {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
         catch (Exception e){
+            HttpServletResponse httpResponse = (HttpServletResponse) httpServletResponse;
+            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            httpResponse.getOutputStream().println("Token is incorrect");
+            httpResponse.getOutputStream().flush();
+            httpResponse.getOutputStream().close();
+            System.err.println("URL: "+httpServletRequest.getRequestURI()+ " \n error: "+e.getMessage());
             System.err.println("Access is denied, jwtFilter");
         }
     }

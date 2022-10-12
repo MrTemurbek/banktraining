@@ -9,7 +9,7 @@ import uz.banktraining.service.AdminService;
 import uz.banktraining.service.ExcelService;
 import uz.banktraining.service.ParticipantService;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

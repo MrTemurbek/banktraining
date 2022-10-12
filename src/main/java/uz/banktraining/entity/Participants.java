@@ -23,7 +23,7 @@ public class Participants {
     @NotNull
     private String surname;
     @NotNull
-    @Column()
+    @Column(length = 1000)
     private String course;
     @NotNull
     @Column(name = "phone_number")
