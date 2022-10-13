@@ -32,7 +32,7 @@ public class ParticipantService {
     private final ParticipantsRepository repository;
     private final String PATH = "src/main/resources/templates/";
     private static final String PATH_TO_SAVE = "src/main/resources/templates/certificate_";
-    private static final String LINK = "banktraining.uz/auth/download/";
+    private static final String LINK = "banktraining.uz/userCertificates/";
 
     public ParticipantService(ParticipantsRepository repository) {
         this.repository = repository;
@@ -51,8 +51,7 @@ public class ParticipantService {
 
     public ResponseDTO save(ParticipantDTO dto) {
         if (repository.existsByCertificateID(dto.getCertificateID())) {
-            return new ResponseDTO(1, "ERROR", "This Id is taken, please delete this "
-                    + dto.getCertificateID() + " id number", null);
+            return new ResponseDTO(1, "ERROR", "Bu id bilan sertifikat yaratilgan, iltimos boshqa id kiriting", null);
         }
         try {
             Participants participants = new Participants(dto);

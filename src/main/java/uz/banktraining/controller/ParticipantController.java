@@ -36,10 +36,11 @@ public class ParticipantController {
         return service.searchById(id);
     }
 
+    @CrossOrigin
     @PostMapping("/save")
     public ResponseDTO save(@RequestBody ParticipantDTO participants){
-        service.save(participants);
-        return new ResponseDTO(0, "SUCCESS", null, null);
+        return service.save(participants);
+
     }
     @CrossOrigin
     @GetMapping("/download/{id}")

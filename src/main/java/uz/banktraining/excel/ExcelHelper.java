@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
-import com.itextpdf.text.DocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,14 +14,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.entity.Participants;
-import uz.banktraining.pdf.PDFHelper;
-import uz.banktraining.repo.ParticipantsRepository;
+
 
 @Component
 public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String PATH = "./src/main/resources/templates/certificate_";
-    private static final String LINK = "banktraining.uz/auth/download/";
+    private static final String LINK = "banktraining.uz/userCertificates/";
 
     public boolean hasExcelFormat(MultipartFile file) {
         return TYPE.equals(file.getContentType());
