@@ -1,4 +1,4 @@
-package uz.banktraining.config;
+package uz.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
