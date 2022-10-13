@@ -1,4 +1,4 @@
-package uz.config;
+package uz.banktraining.config;
 
 
 
