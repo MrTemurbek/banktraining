@@ -1,6 +1,5 @@
 package uz.banktraining.service;
 
-import com.itextpdf.text.DocumentException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.entity.Participants;
@@ -33,8 +32,6 @@ public class ExcelService {
             repository.saveAll(participantsList);
     } catch (IOException e) {
         throw new RuntimeException("fail to store excel data: " + e.getMessage());
-    } catch (DocumentException e) {
-            throw new RuntimeException("fail to create pdf file"+e.getMessage());
-        }
+    }
     }
 }
