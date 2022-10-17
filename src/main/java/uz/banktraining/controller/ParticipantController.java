@@ -2,15 +2,14 @@ package uz.banktraining.controller;
 
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 import uz.banktraining.dto.ParticipantDTO;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
 import uz.banktraining.service.ExcelService;
 import uz.banktraining.service.ParticipantService;
+import uz.banktraining.service.SMSService;
 
 
 @RestController
@@ -18,11 +17,13 @@ import uz.banktraining.service.ParticipantService;
 public class ParticipantController {
     private final ParticipantService service;
     private final ExcelService excelService;
+    private final SMSService smsService;
 
 
-    public ParticipantController(ParticipantService service, ExcelService excelService) {
+    public ParticipantController(ParticipantService service, ExcelService excelService, SMSService smsService) {
         this.service = service;
         this.excelService = excelService;
+        this.smsService = smsService;
     }
     @CrossOrigin
     @GetMapping("/getAll/{page}")
@@ -71,7 +72,7 @@ public ResponseDTO update(@PathVariable String certificateId, @RequestBody Parti
     @CrossOrigin
     @PostMapping("/sms/{certificateId}")
     public ResponseDTO sendSMS(@PathVariable("certificateId") Object certificateId){
-        return service.sendSMS(String.valueOf(certificateId));
+        return smsService.sendSMS(String.valueOf(certificateId));
     }
 
 

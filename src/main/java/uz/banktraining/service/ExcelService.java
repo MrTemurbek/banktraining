@@ -14,10 +14,11 @@ import java.util.List;
 public class ExcelService {
 
     private final ParticipantsRepository repository;
+    private final SMSService smsService;
 
-    public ExcelService(ParticipantsRepository repository) {
+    public ExcelService(ParticipantsRepository repository, SMSService smsService) {
         this.repository = repository;
-
+        this.smsService = smsService;
     }
 
     public void save(MultipartFile file)  {
@@ -26,7 +27,7 @@ public class ExcelService {
             participantsList.removeIf(participant -> repository.existsByCertificateID(participant.getCertificateID())
             );
             for (Participants participants : participantsList) {
-                new ParticipantService(repository).sendSMS(participants.getCertificateID());
+                smsService.sendSMS(participants.getCertificateID());
                 new PDFHelper().pdfCreator(participants.getName(), participants.getCertificateID(), participants.getLink());
             }
             repository.saveAll(participantsList);

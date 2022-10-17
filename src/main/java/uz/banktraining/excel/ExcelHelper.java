@@ -19,7 +19,7 @@ import uz.banktraining.entity.Participants;
 @Component
 public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    private static final String PATH = "./src/main/resources/templates/certificate_";
+    private static final String PATH = "./pdf/certificate_";
     private static final String LINK = "banktraining.uz/userCertificates/";
 
     public boolean hasExcelFormat(MultipartFile file) {

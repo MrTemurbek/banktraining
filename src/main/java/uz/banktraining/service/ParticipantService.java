@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.*;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,12 +29,15 @@ import java.util.Objects;
 public class ParticipantService {
 
     private final ParticipantsRepository repository;
-    private final String PATH = "src/main/resources/templates/";
-    private static final String PATH_TO_SAVE = "src/main/resources/templates/certificate_";
+    private final SMSService smsService;
+
+    private final String PATH = "pdf/";
+    private static final String PATH_TO_SAVE = "pdf/certificate_";
     private static final String LINK = "banktraining.uz/userCertificates/";
 
-    public ParticipantService(ParticipantsRepository repository) {
+    public ParticipantService(ParticipantsRepository repository, SMSService smsService) {
         this.repository = repository;
+        this.smsService = smsService;
     }
 
     public Page<Participants> getAllByPage(int pageNumber) {
@@ -60,7 +62,7 @@ public class ParticipantService {
             participants.setLink("http://" + LINK + participants.getCertificateID());
             participants.setCreatedAt(new Date());
             repository.save(participants);
-            sendSMS(participants.getCertificateID());
+            smsService.sendSMS(participants.getCertificateID());
             new PDFHelper().pdfCreator(participants.getName(), participants.getCertificateID(), participants.getLink());
             return new ResponseDTO(0, "SUCCESS", null, null);
         } catch (Exception e) {
@@ -90,7 +92,7 @@ public class ParticipantService {
             String link = participantDto.getLink();
             participantDto = mapper.convertValue(participant, Participants.class);
             repository.updateParticipants(participant.getName(), participant.getNumber(), participant.getCertificateID());
-            sendSMS(certificateId);
+            smsService.sendSMS(certificateId);
             new PDFHelper().pdfCreator(participantDto.getName(), participantDto.getCertificateID(), link);
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
@@ -158,16 +160,7 @@ public class ParticipantService {
         }
     }
 
-    public ResponseDTO sendSMS(String id) {
-        try {
-            Participants participant = repository.getParticipantsByCertificateID(id);
-            System.out.println("SMS -> LINK:" + participant.getLink() + "ID :"+id);
-        }
-        catch (Exception e){
-            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
-        }
-        return new ResponseDTO(0, "SUCCESS", null, null);
-    }
+
 
     public ResponseDTO getAllLinks() {
         List<String> links = repository.getAllLinks();
