@@ -10,8 +10,7 @@ import javax.persistence.Entity;
 @Setter
 public class ParticipantDTO {
     private String name;
-    private String surname;
-    private String course;
+//    private String course;
     private String number;
     private String certificateID;
 }

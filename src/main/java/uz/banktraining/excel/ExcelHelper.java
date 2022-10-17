@@ -65,23 +65,6 @@ public class ExcelHelper {
                             break;
 
                         case 1:
-                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
-                                participants.setSurname(currentCell.getStringCellValue());
-                            } else {
-                                copy= false;
-                            }
-
-                            break;
-
-                        case 2:
-                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
-                                participants.setCourse(currentCell.getStringCellValue());
-                            } else {
-                                copy= false;
-                            }
-                            break;
-
-                        case 3:
                             try{
                                 int number =(int) currentCell.getNumericCellValue();
                                 String id = Integer.toString(number);
@@ -94,15 +77,15 @@ public class ExcelHelper {
                             }
                             catch (Exception e){
                                 String id = currentCell.getStringCellValue();
-                                    if(!id.isEmpty() && !id.isBlank()){
-                                        participants.setNumber(id);
-                                    }
-                                    else {
-                                        copy= false;
-                                    }
+                                if(!id.isEmpty() && !id.isBlank()){
+                                    participants.setNumber(id);
                                 }
+                                else {
+                                    copy= false;
+                                }
+                            }
                             break;
-                        case 4:
+                        case 3:
                             if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
 
                                 participants.setCertificateID(currentCell.getStringCellValue());
@@ -113,7 +96,13 @@ public class ExcelHelper {
                                 copy= false;
                             }
                             break;
-
+//                        case 4:
+//                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
+//                                participants.setCourse(currentCell.getStringCellValue());
+//                            } else {
+//                                copy= false;
+//                            }
+//                            break;
                     }
                     cellIdx++;
                 }

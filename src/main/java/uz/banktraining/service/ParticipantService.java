@@ -60,7 +60,8 @@ public class ParticipantService {
             participants.setLink("http://" + LINK + participants.getCertificateID());
             participants.setCreatedAt(new Date());
             repository.save(participants);
-            new PDFHelper().pdfCreator(participants.getName(), participants.getSurname(), participants.getCertificateID(), participants.getCourse(), participants.getLink());
+            sendSMS(participants.getCertificateID());
+            new PDFHelper().pdfCreator(participants.getName(), participants.getCertificateID(), participants.getLink());
             return new ResponseDTO(0, "SUCCESS", null, null);
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
@@ -88,9 +89,9 @@ public class ParticipantService {
             Participants participantDto = repository.getParticipantsByCertificateID(certificateId);
             String link = participantDto.getLink();
             participantDto = mapper.convertValue(participant, Participants.class);
-            repository.updateParticipants(participant.getName(), participant.getSurname(), participant.getNumber(), participant.getCourse(), participant.getCertificateID());
-
-            new PDFHelper().pdfCreator(participantDto.getName(), participantDto.getSurname(), participantDto.getCertificateID(), participantDto.getCourse(), link);
+            repository.updateParticipants(participant.getName(), participant.getNumber(), participant.getCertificateID());
+            sendSMS(certificateId);
+            new PDFHelper().pdfCreator(participantDto.getName(), participantDto.getCertificateID(), link);
         } catch (Exception e) {
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
@@ -160,12 +161,17 @@ public class ParticipantService {
     public ResponseDTO sendSMS(String id) {
         try {
             Participants participant = repository.getParticipantsByCertificateID(id);
-            System.out.println("SMS -> LINK:" + participant.getLink());
+            System.out.println("SMS -> LINK:" + participant.getLink() + "ID :"+id);
         }
         catch (Exception e){
             return new ResponseDTO(1, "ERROR", e.getMessage(), null);
         }
         return new ResponseDTO(0, "SUCCESS", null, null);
+    }
+
+    public ResponseDTO getAllLinks() {
+        List<String> links = repository.getAllLinks();
+        return new ResponseDTO(0, "SUCCESS", null, links);
     }
 }
 

@@ -20,11 +20,9 @@ public class Participants {
     private Long  id;
     @NotNull
     private String name;
-    @NotNull
-    private String surname;
-    @NotNull
-    @Column(length = 1000)
-    private String course;
+//    @NotNull
+//    @Column(length = 1000)
+//    private String course;
     @NotNull
     @Column(name = "phone_number")
     private String number;
@@ -39,8 +37,7 @@ public class Participants {
 
     public Participants (ParticipantDTO participantDTO) {
         this.name = participantDTO.getName();
-        this.surname = participantDTO.getSurname();
-        this.course =participantDTO.getCourse();
+//        this.course =participantDTO.getCourse();
         this.number =participantDTO.getNumber();
         this.certificateID =participantDTO.getCertificateID();
     }
