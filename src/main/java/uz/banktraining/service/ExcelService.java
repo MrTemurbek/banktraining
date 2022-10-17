@@ -27,7 +27,7 @@ public class ExcelService {
             participantsList.removeIf(participant -> repository.existsByCertificateID(participant.getCertificateID())
             );
             for (Participants participants : participantsList) {
-                smsService.sendSMS(participants.getCertificateID());
+                smsService.sendSMS(participants.getLink(), participants.getCertificateID());
                 new PDFHelper().pdfCreator(participants.getName(), participants.getCertificateID(), participants.getLink());
             }
             repository.saveAll(participantsList);

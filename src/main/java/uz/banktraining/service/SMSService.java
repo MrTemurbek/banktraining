@@ -24,4 +24,8 @@ public class SMSService {
         }
         return new ResponseDTO(0, "SUCCESS", null, null);
     }
+
+    public void sendSMS(String link, String id){
+            System.out.println("SMS -> LINK:" + link + "ID :"+id);
+    }
 }
