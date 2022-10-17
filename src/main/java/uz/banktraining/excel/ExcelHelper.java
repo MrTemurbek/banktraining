@@ -85,9 +85,8 @@ public class ExcelHelper {
                                 }
                             }
                             break;
-                        case 3:
+                        case 2:
                             if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
-
                                 participants.setCertificateID(currentCell.getStringCellValue());
                                 participants.setPath(PATH + participants.getCertificateID());
                                 participants.setLink("http://"+LINK+participants.getCertificateID());
@@ -96,7 +95,7 @@ public class ExcelHelper {
                                 copy= false;
                             }
                             break;
-//                        case 4:
+//                        case 3:
 //                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
 //                                participants.setCourse(currentCell.getStringCellValue());
 //                            } else {
