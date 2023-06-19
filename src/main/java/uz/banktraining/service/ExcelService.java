@@ -7,7 +7,6 @@ import uz.banktraining.excel.ExcelHelper;
 import uz.banktraining.pdf.PDFHelper;
 import uz.banktraining.repo.ParticipantsRepository;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -30,8 +29,15 @@ public class ExcelService {
                 smsService.sendSMS(participants.getLink(), participants.getCertificateID());
                 new PDFHelper().pdfCreator(participants.getName(), participants.getCertificateID(), participants.getLink());
             }
-            repository.saveAll(participantsList);
-    } catch (IOException e) {
+            try {
+                repository.saveAll(participantsList);
+            }
+            catch (Exception e){
+                System.err.println("Error while saving participants infos: " +e);
+                throw new Exception("saveAll");
+            }
+    } catch (Exception e) {
+            System.err.println("Error");
         throw new RuntimeException("fail to store excel data: " + e.getMessage());
     }
     }
