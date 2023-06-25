@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -21,11 +22,6 @@ public class ExcelHelper {
     public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String PATH = "./pdf/certificate_";
     private static final String LINK = "banktraining.uz/userCertificates/";
-
-    public boolean hasExcelFormat(MultipartFile file) {
-        return TYPE.equals(file.getContentType());
-    }
-
 
     public static List<Participants> excelToTutorials(InputStream is) {
         try {
@@ -60,28 +56,25 @@ public class ExcelHelper {
                             if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setName(currentCell.getStringCellValue());
                             } else {
-                                copy= false;
+                                copy = false;
                             }
                             break;
 
                         case 1:
-                            try{
-                                int number =(int) currentCell.getNumericCellValue();
+                            try {
+                                int number = (int) currentCell.getNumericCellValue();
                                 String id = Integer.toString(number);
-                                if(!id.isEmpty() && !id.isBlank()){
+                                if (!id.isEmpty() && !id.isBlank()) {
                                     participants.setNumber(id);
+                                } else {
+                                    copy = false;
                                 }
-                                else {
-                                    copy= false;
-                                }
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 String id = currentCell.getStringCellValue();
-                                if(!id.isEmpty() && !id.isBlank()){
+                                if (!id.isEmpty() && !id.isBlank()) {
                                     participants.setNumber(id);
-                                }
-                                else {
-                                    copy= false;
+                                } else {
+                                    copy = false;
                                 }
                             }
                             break;
@@ -89,10 +82,10 @@ public class ExcelHelper {
                             if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
                                 participants.setCertificateID(currentCell.getStringCellValue());
                                 participants.setPath(PATH + participants.getCertificateID());
-                                participants.setLink("http://"+LINK+participants.getCertificateID());
+                                participants.setLink("http://" + LINK + participants.getCertificateID());
                                 participants.setCreatedAt(new Date());
                             } else {
-                                copy= false;
+                                copy = false;
                             }
                             break;
 //                        case 3:
@@ -115,6 +108,48 @@ public class ExcelHelper {
             return participantsList;
         } catch (IOException e) {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
+        }
+    }
+
+
+    public static List<String> excelGetIds(InputStream is) {
+        try {
+            Workbook workbook = new XSSFWorkbook(is);
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rows = sheet.iterator();
+
+            List<String> participantsIds = new ArrayList<>();
+
+            int rowNumber = 0;
+            while (rows.hasNext()) {
+                Row currentRow = rows.next();
+
+                // skip header
+                if (rowNumber == 0) {
+                    rowNumber++;
+                    continue;
+                }
+
+                Iterator<Cell> cellsInRow = currentRow.iterator();
+
+                int cellIdx = 0;
+                while (cellsInRow.hasNext()) {
+                    Cell currentCell = cellsInRow.next();
+
+                    switch (cellIdx) {
+                        case 0:
+                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
+                                participantsIds.add(currentCell.getStringCellValue());
+                            }
+                    }
+                }
+            }
+
+            workbook.close();
+
+            return participantsIds;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse Excel file v2: " + e.getMessage());
         }
     }
 }

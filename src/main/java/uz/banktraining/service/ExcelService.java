@@ -1,12 +1,17 @@
 package uz.banktraining.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.entity.Participants;
 import uz.banktraining.excel.ExcelHelper;
 import uz.banktraining.pdf.PDFHelper;
 import uz.banktraining.repo.ParticipantsRepository;
+import uz.banktraining.util.DeleteAllInFolder;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -40,5 +45,24 @@ public class ExcelService {
             System.err.println("Error");
         throw new RuntimeException("fail to store excel data: " + e.getMessage());
     }
+    }
+
+    public ResponseDTO renameFile(MultipartFile file){
+        try {
+            List<String> participantsIDs = ExcelHelper.excelGetIds(file.getInputStream());
+            List<Participants> infoThatIds = new LinkedList<>();
+            for (String ids: participantsIDs) {
+                infoThatIds.add(repository.getParticipantsByCertificateID(ids));
+            }
+            new DeleteAllInFolder().deleteInFolder();  //clear folder
+            for (Participants participants : infoThatIds){
+                new PDFHelper().changeNameAndLocation(participants.getCertificateID(), participants.getName(), participants.getPath());
+            }
+        }catch (Exception e){
+            System.err.println("Error");
+            return new ResponseDTO(1, "ERROR", e.getMessage(), null);
+        }
+
+        return new ResponseDTO(0, "SUCCESS", null, null);
     }
 }

@@ -50,6 +50,12 @@ public class ParticipantController {
     }
 
     @CrossOrigin
+    @PostMapping("/renameFiles")
+    public ResponseDTO renameCertificateName(@RequestParam("file") MultipartFile file) {
+            return excelService.renameFile(file);
+    }
+
+    @CrossOrigin
     @GetMapping("/getById/{id}")
     public Participants getByCertificateId(@PathVariable("id") String id){
         return service.getByID(id);

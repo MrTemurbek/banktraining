@@ -47,8 +47,19 @@ public class PDFHelper {
             System.err.println("Error while creating pdf : "+e);
             throw new RuntimeException("PDF");
         }
+    }
 
-
+    public void changeNameAndLocation(String id, String name, String location){
+        try {
+            String filename = ("changed/"+id+" "+name);
+            PdfDocument pdf = new PdfDocument(new PdfReader(location.substring(2)+".pdf"), new PdfWriter(filename+".pdf"));
+            Document document = new Document(pdf);
+            document.close();
+        }
+        catch (Exception e){
+            System.err.println("Error while creating pdf v2: "+e);
+            throw new RuntimeException("PDF");
+        }
     }
 
 
