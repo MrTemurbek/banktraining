@@ -11,7 +11,6 @@ import uz.banktraining.repo.AdminRepository;
 public class MyUserDetailsService implements UserDetailsService {
 
     private final AdminRepository adminRepository;
-    ObjectMapper objectMapper;
     public MyUserDetailsService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }

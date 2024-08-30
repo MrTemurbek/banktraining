@@ -18,13 +18,11 @@ public class CorsFilterClass {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://banktraining.uz:80");
         config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
         config.addAllowedMethod(HttpMethod.DELETE);
         config.addAllowedOriginPattern("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-
-        CorsFilter filter = new CorsFilter(source);
+        new CorsFilter(source);
     }
 }

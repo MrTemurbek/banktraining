@@ -1,4 +1,4 @@
-package uz.banktraining.dto;
+package uz.banktraining.entity;
 
 import lombok.*;
 
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "admins")
-public class AdminDTO {
+public class AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

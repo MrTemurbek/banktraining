@@ -5,7 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import uz.banktraining.dto.AdminDTO;
+import uz.banktraining.entity.AdminEntity;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.util.JWTUtil;
 
@@ -19,7 +19,7 @@ public class AdminService {
         this.jwtUtil = jwtUtil;
     }
 
-    public ResponseDTO check(AdminDTO admin ){
+    public ResponseDTO check(AdminEntity admin ){
         UsernamePasswordAuthenticationToken authInputToken =
                 new UsernamePasswordAuthenticationToken(admin.getUsername(),
                         admin.getPassword());

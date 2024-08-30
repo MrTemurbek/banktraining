@@ -13,13 +13,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 import uz.banktraining.entity.Participants;
 
 
 @Component
 public class ExcelHelper {
-    public String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String PATH = "./pdf/certificate_";
     private static final String LINK = "banktraining.uz/userCertificates/";
 
@@ -64,7 +62,7 @@ public class ExcelHelper {
                             try {
                                 int number = (int) currentCell.getNumericCellValue();
                                 String id = Integer.toString(number);
-                                if (!id.isEmpty() && !id.isBlank()) {
+                                if (!id.isBlank()) {
                                     participants.setNumber(id);
                                 } else {
                                     copy = false;
@@ -88,13 +86,6 @@ public class ExcelHelper {
                                 copy = false;
                             }
                             break;
-//                        case 3:
-//                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
-//                                participants.setCourse(currentCell.getStringCellValue());
-//                            } else {
-//                                copy= false;
-//                            }
-//                            break;
                     }
                     cellIdx++;
                 }
@@ -130,17 +121,9 @@ public class ExcelHelper {
                     continue;
                 }
 
-                Iterator<Cell> cellsInRow = currentRow.iterator();
-
-                int cellIdx = 0;
-                while (cellsInRow.hasNext()) {
-                    Cell currentCell = cellsInRow.next();
-
-                    switch (cellIdx) {
-                        case 0:
-                            if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
-                                participantsIds.add(currentCell.getStringCellValue());
-                            }
+                for (Cell currentCell : currentRow) {
+                    if (!currentCell.getStringCellValue().isEmpty() && !currentCell.getStringCellValue().isBlank()) {
+                        participantsIds.add(currentCell.getStringCellValue());
                     }
                 }
             }

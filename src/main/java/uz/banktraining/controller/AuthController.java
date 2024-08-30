@@ -5,11 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import uz.banktraining.dto.AdminDTO;
+import uz.banktraining.entity.AdminEntity;
 import uz.banktraining.dto.ResponseDTO;
 import uz.banktraining.service.AdminService;
-import uz.banktraining.service.ExcelService;
 import uz.banktraining.service.ParticipantService;
 
 @CrossOrigin
@@ -29,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/check")
-    public ResponseDTO checkAdmin(@RequestBody AdminDTO admin) {
+    public ResponseDTO checkAdmin(@RequestBody AdminEntity admin) {
         return adminService.check(admin);
     }
 

@@ -30,8 +30,6 @@ public class ParticipantService {
 
     private final ParticipantsRepository repository;
     private final SMSService smsService;
-
-    private final String PATH = "pdf/";
     private static final String PATH_TO_SAVE = "pdf/certificate_";
     private static final String LINK = "banktraining.uz/userCertificates/";
 
@@ -117,6 +115,7 @@ public class ParticipantService {
     }
 
     public ResponseEntity<?> downloadFile(String id) {
+        String PATH = "pdf/";
         Path path = Paths.get(PATH + "certificate_" + id + ".pdf");
 
         Resource resource = null;

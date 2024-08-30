@@ -3,15 +3,15 @@ package uz.banktraining.service;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.banktraining.dto.AdminDTO;
+import uz.banktraining.entity.AdminEntity;
 
 import java.util.Collection;
 import java.util.Collections;
 
 public class MyUserPrincipal implements UserDetails {
-    private AdminDTO admin;
+    private AdminEntity admin;
 
-    public MyUserPrincipal(AdminDTO admin) {
+    public MyUserPrincipal(AdminEntity admin) {
         this.admin = admin;
     }
 

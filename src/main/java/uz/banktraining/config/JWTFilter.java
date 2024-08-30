@@ -1,7 +1,5 @@
 package uz.banktraining.config;
 
-
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,12 +52,11 @@ public class JWTFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 } catch (Exception exc) {
-                    HttpServletResponse httpResponse = (HttpServletResponse) httpServletResponse;
                     System.out.println("URL: "+httpServletRequest.getRequestURI());
-                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    httpResponse.getOutputStream().println("Token has expired");
-                    httpResponse.getOutputStream().flush();
-                    httpResponse.getOutputStream().close();
+                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    httpServletResponse.getOutputStream().println("Token has expired");
+                    httpServletResponse.getOutputStream().flush();
+                    httpServletResponse.getOutputStream().close();
                 }
             }
         }
@@ -68,11 +65,10 @@ public class JWTFilter extends OncePerRequestFilter {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
         catch (Exception e){
-            HttpServletResponse httpResponse = (HttpServletResponse) httpServletResponse;
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpResponse.getOutputStream().println("Token is incorrect");
-            httpResponse.getOutputStream().flush();
-            httpResponse.getOutputStream().close();
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            httpServletResponse.getOutputStream().println("Token is incorrect");
+            httpServletResponse.getOutputStream().flush();
+            httpServletResponse.getOutputStream().close();
             System.err.println("URL: "+httpServletRequest.getRequestURI()+ " \n error: "+e.getMessage());
             System.err.println("Access is denied, jwtFilter");
         }
